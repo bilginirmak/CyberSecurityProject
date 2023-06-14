@@ -14,5 +14,5 @@ public class DBConstants {
 
 	public static final String MYSQL_USER_LOGIN = "root";
 
-	public static final String MYSQL_USER_PASSWORD = "JESUSchrist3!";
+	public static final String MYSQL_USER_PASSWORD = "your password";
 }
