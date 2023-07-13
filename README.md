@@ -1,4 +1,4 @@
-# LibraryManagementSystem
+# LibraryManagementSystem WEB
 ### Web Service Course Project
 ## Library Management System
 
