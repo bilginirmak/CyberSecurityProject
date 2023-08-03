@@ -169,6 +169,14 @@ public class LibraryService {
 		return arrayRole;
 	}
 
+	/**
+	 * Method returns an Array of All Books
+	 * @param isbn
+	 * @param title
+	 * @param author
+	 * @param publisher
+	 * @return
+	 */
 	public FormResponse<String[][]> getArrayOfAllBooks(String isbn, String title, String author, String publisher) {
 
 		List<Book> books;
@@ -188,6 +196,11 @@ public class LibraryService {
 				.setValue(listBookToString(books));
 	}
 
+	/**
+	 * Method convert ListBook to Array
+	 * @param listCatalog
+	 * @return
+	 */
 	private String[][] listBookToString(List<Book> listCatalog) {
 
 		String[][] arrayBooks = new String[listCatalog.size()][7];
@@ -227,7 +240,31 @@ public class LibraryService {
 		return new FormResponse<String>()
 				.setStatus(Status.DONE);
 	}
+	
+	
+	/**
+	 * Method delete Book from the Catalog by ISBN
+	 * @param isbn
+	 * @return
+	 */
+	public FormResponse<String> deleteBookById(String isbn) {
 
+		try {
+			dbs.deleteBookByISBN(isbn);
+		} catch (DBConnectionException | SQLException | SQLExecutingException e) {
+			return new FormResponse<String>()
+					.setStatus(Status.ERROR)
+					.setMessage("Book can't be updated - DataBase exception");
+		}
+
+		return new FormResponse<String>()
+				.setStatus(Status.DONE);
+	}
+
+	/**
+	 * Method get an Array of books to return 
+	 * @return
+	 */
 	public FormResponse<String[][]> getArrayToReturnBooks() {
 		List<ResponseContainer<Issued, Book, User>> responseContainer;
 
@@ -246,6 +283,11 @@ public class LibraryService {
 				.setValue(listToReturnBooksToString(responseContainer));
 	}
 
+	/**
+	 * Method convert ListToReturn to String , by UserID
+	 * @param responseContainers
+	 * @return
+	 */
 	public String[][] listToReturnBooksToString(List<ResponseContainer<Issued, Book, User>> responseContainers) {
 
 		String[][] arrayIssued = new String[responseContainers.size()][9];
@@ -269,6 +311,11 @@ public class LibraryService {
 		return arrayIssued;
 	}
 
+	/**
+	 * Method updates Issued Book to Returned status
+	 * @param issuedId
+	 * @return
+	 */
 	public FormResponse<String> updateIssuedToReturned(String issuedId) {
 		Issued issued = new Issued();
 		issued.setIssued_id(Integer.valueOf(issuedId));
@@ -312,6 +359,14 @@ public class LibraryService {
 				.setValue(listBookToString(books));
 	}
 	
+	
+	/**
+	 * Method get ArrayList of Users
+	 * @param user_id
+	 * @param name
+	 * @param contact
+	 * @return
+	 */
 	public FormResponse<String[][]> getArrayOfUsers(String user_id, String name, String contact) {
 		List<User> users = null;
 		try {
@@ -326,6 +381,11 @@ public class LibraryService {
 				.setValue(listUsersToString(users));
 	}
 
+	/**
+	 * Method convert Users List to String
+	 * @param listUser
+	 * @return
+	 */
 	public String[][] listUsersToString(List<User> listUser) {
 
 		String[][] arrayUsers = new String[listUser.size()][3];
@@ -343,6 +403,12 @@ public class LibraryService {
 		return arrayUsers;
 	}
 	
+	/**
+	 * Method Issue Book by Book ID to a User by User ID
+	 * @param book_id
+	 * @param user_id
+	 * @return
+	 */
 	public FormResponse<String> issueBook(String book_id, String user_id) {
 		Issued issued = new Issued();
 		issued.setBook_id(Integer.valueOf(book_id));

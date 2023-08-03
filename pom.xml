@@ -7,6 +7,9 @@
   <packaging>war</packaging>
   
   <dependencies>
+
+
+
 	<dependency>
 		<groupId>org.glassfish.jersey.containers</groupId>
 		<artifactId>jersey-container-servlet</artifactId>
@@ -30,6 +33,18 @@
     	<version>8.0.31</version>
 	</dependency>
 
+<dependency>
+    	<groupId>com.sun.xml.ws</groupId>
+    	<artifactId>jaxws-rt</artifactId>
+    	<version>4.0.1</version>
+</dependency>
+
+ <dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20160212</version>
+  </dependency>
+	
 </dependencies>
   
   <build>

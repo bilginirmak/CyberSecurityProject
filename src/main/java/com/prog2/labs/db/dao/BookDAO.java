@@ -172,5 +172,30 @@ public class BookDAO extends Connector implements GenericDAO<Book> {
 			}
 		}
 	}
+	
+	@Override
+	public void deleteById(int id) throws DBConnectionException, SQLException, SQLExecutingException {
+		connection = getConnection();
+		PreparedStatement preparedStatement = null;
+
+		String sql = "DELETE FROM BOOKS WHERE ID=?";
+
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+		} catch (SQLException e) {
+			throw new SQLExecutingException(e.getLocalizedMessage());
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		}
+	}
 
 }

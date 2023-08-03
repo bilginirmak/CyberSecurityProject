@@ -147,6 +147,11 @@ public class DBService {
 		bookDAO.update(newBook);
 	}
 	
+	public void updateBookByISBN(Book newBook) 
+			throws SQLException, DBConnectionException, SQLExecutingException {
+		extendedDAO.updateByISBN(newBook);
+	}
+	
 	/**
 	 * Method adds new user
 	 * @param newUser
@@ -214,5 +219,10 @@ public class DBService {
 	public User getUserById(int userId) 
 			throws DBConnectionException, SQLException, SQLExecutingException {
 		return userDAO.getById(userId);
+	}
+	
+	public void deleteBookByISBN(String isbn) 
+			throws DBConnectionException, SQLException, SQLExecutingException {
+		extendedDAO.deleteBookByISBN(isbn);
 	}
 }

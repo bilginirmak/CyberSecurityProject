@@ -26,4 +26,7 @@ public interface GenericDAO<T> {
 	//update
 	public void update(T unit) throws DBConnectionException, SQLException, SQLExecutingException;
 
+	// delete
+	public void deleteById(int id) throws DBConnectionException, SQLException, SQLExecutingException;
+
 }

@@ -180,4 +180,10 @@ public class UserDAO extends Connector implements GenericDAO<User> {
 			}
 		}
 	}
+
+	@Override
+	public void deleteById(int id) throws DBConnectionException, SQLException, SQLExecutingException {
+		// TODO Auto-generated method stub
+		
+	}
 }

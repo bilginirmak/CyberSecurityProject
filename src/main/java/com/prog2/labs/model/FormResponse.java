@@ -8,6 +8,11 @@ package com.prog2.labs.model;
  */
 public class FormResponse<T> {
 
+	@Override
+	public String toString() {
+		return "FormResponse [status=" + status + ", value=" + value + ", message=" + message + "]";
+	}
+
 	private Status status;
 	private T value;
 	private String message;

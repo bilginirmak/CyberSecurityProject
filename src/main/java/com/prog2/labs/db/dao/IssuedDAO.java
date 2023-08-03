@@ -156,4 +156,10 @@ public class IssuedDAO extends Connector implements GenericDAO<Issued> {
 		
 	}
 
+	@Override
+	public void deleteById(int id) throws DBConnectionException, SQLException, SQLExecutingException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

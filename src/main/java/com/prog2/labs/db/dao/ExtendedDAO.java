@@ -92,7 +92,7 @@ public class ExtendedDAO extends Connector {
 	}
 	
 	/**
-	 *  Available books
+	 *  Available books SEARCH
 	 * @return
 	 * @throws SQLException
 	 * @throws DBConnectionException 
@@ -442,6 +442,62 @@ public class ExtendedDAO extends Connector {
 		}
 
 		return userList;
+	}
+	
+	public void deleteBookByISBN(String isbn) throws DBConnectionException, SQLException, SQLExecutingException {
+		connection = getConnection();
+		PreparedStatement preparedStatement = null;
+
+		String sql = "DELETE FROM BOOKS WHERE ISBN=?";
+
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, isbn);
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new SQLExecutingException(e.getLocalizedMessage());
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		}
+	}
+		
+	public void updateByISBN(Book book) throws DBConnectionException, SQLException, SQLExecutingException {
+		connection = getConnection();
+		PreparedStatement preparedStatement = null;
+
+		String sql = "UPDATE BOOKS SET TITLE=?, "
+				+ "AUTHOR=?, PUBLISHER=?, PRICE=? , QUANTITY=? "
+				+ "WHERE ISBN=?";
+		
+		try {
+			preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, book.getTitle());
+			preparedStatement.setString(2, book.getAuthor());
+			preparedStatement.setString(3, book.getPublisher());
+			preparedStatement.setDouble(4, book.getPrice());
+			preparedStatement.setInt(5, book.getQuantity());
+			preparedStatement.setString(6, book.getIsbn());
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new SQLExecutingException(e.getLocalizedMessage());
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		}
+	
 	}
 }
 

@@ -9,6 +9,11 @@ package com.prog2.labs.model;
  */
 public class ResponseContainer<A,B,C> {
 
+	@Override
+	public String toString() {
+		return "ResponseContainer [first=" + first + ", second=" + second + ", third=" + third + "]";
+	}
+
 	private A first;
 	private B second;
 	private C third;
