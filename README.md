@@ -12,7 +12,7 @@ The project Library Management System implements REST and SOAP API and Java Clie
 is created as basic software that has all necessary features for ordinary libraries. It has implemented a connection to database (MySQL). This application has two types of users: Librarian and Student and provides the next functionality:
 ##### for LIBRARIAN: 
 Add Users, Add books, Update books quantity, See "Books" Catalog, See "Available Books" Catalog, See "Issued Books" Catalog, Filter all Catalogs, Sort Catalogs by any field, Issue Books, Return Books, Change Language.
-#####for USER:
+##### for USER:
  See "All Books" Catalog, See "Available Books" Catalog, Filter and Sort Catalogs, Borrow Book from Available, See All "Borrowed Books", Return Books.
 
 
