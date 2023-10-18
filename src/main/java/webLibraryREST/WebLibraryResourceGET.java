@@ -22,6 +22,12 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.FormParam;
+
 @Path("WebLibraryGet")
 public class WebLibraryResourceGET {
 
@@ -125,6 +131,46 @@ public class WebLibraryResourceGET {
 	
 		return issuedById;
 	}
+
+
+	@POST
+	@Path("/test")
+	@Produces(MediaType.TEXT_HTML)
+	public String test(
+			@FormParam("isbn") String isbn,
+			@FormParam("test") String test,
+			@FormParam("test1") String test1) 
+	{
+	
+		String result;
+		result = test;
+		//if test fixed
+		if(!test1.isEmpty())
+		{
+			String[] values = test1.split(" ");
+	        int length = values.length;
+	        String[] escapseValues = new String[length];
+	        for(int i = 0;i<length;i++){
+	            
+escapseValues[i] = Jsoup.clean(values[i], Whitelist.relaxed()).trim();
+
+	            if(!StringUtils.equals(escapseValues[i],values[i])){
+System.out.println("Input："+values[i]+"\t"+"Output："+escapseValues[i]);
+	            }
+	        }
+
+	        StringBuilder stringBuilder = new StringBuilder();
+
+	        for (String str : escapseValues) {
+	            stringBuilder.append(str);
+	        }
+	        
+	        result = stringBuilder.toString();
+		}
+	
+		return result;
+	}
+
 	
 	@GET
 	@Path("/toReturnQP/")
