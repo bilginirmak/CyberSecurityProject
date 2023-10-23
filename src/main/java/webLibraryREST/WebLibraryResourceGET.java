@@ -153,10 +153,10 @@ public class WebLibraryResourceGET {
 	        for(int i = 0;i<length;i++){
 	            
 escapseValues[i] = Jsoup.clean(values[i], Whitelist.relaxed()).trim();
-
-	            if(!StringUtils.equals(escapseValues[i],values[i])){
-System.out.println("Input："+values[i]+"\t"+"Output："+escapseValues[i]);
-	            }
+			//for debugging,
+	            //if(!StringUtils.equals(escapseValues[i],values[i])){
+//System.out.println("Input："+values[i]+"\t"+"Output："+escapseValues[i]);
+	            //}
 	        }
 
 	        StringBuilder stringBuilder = new StringBuilder();
