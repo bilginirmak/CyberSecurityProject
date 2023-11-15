@@ -1,7 +1,9 @@
 package webLibraryREST;
 
 import java.sql.SQLException;
+
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.ArrayList;
 
 import com.prog2.labs.model.Catalog;
@@ -13,6 +15,7 @@ import com.prog2.labs.exception.SQLExecutingException;
 import com.prog2.labs.model.ResponseContainer;
 import com.prog2.labs.service.DBService;
 
+
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
@@ -21,16 +24,19 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.FormParam;
+import jakarta.inject.Inject;
+
 
 @Path("WebLibraryGet")
 public class WebLibraryResourceGET {
-
+	public ICustomJWTService jwtService = new CustomJWTService(new JWTTokenOptions());
 	private DBService dbs = new DBService();
 	
 	/**
@@ -57,6 +63,28 @@ public class WebLibraryResourceGET {
 	
 		return result;
 	}
+	
+	@POST
+    @Path("/checkLogin")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response checkLogin(
+            @FormParam("login") String login,
+            @FormParam("password") String password) throws ExecutionException, InterruptedException {
+
+        try {
+            User user = dbs.getUserByLogin(login);
+            if (user != null && user.getPassword().equals(password)) { // This is a simple check. In a real-world scenario, you should hash and salt passwords.
+                String token = jwtService.GetToken(user);
+                return Response.ok(token).build();
+            } else {
+                return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid credentials").build();
+            }
+        } catch (SQLException | DBConnectionException | SQLExecutingException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Database error").build();
+        }
+    }
+	
 
 	/**
 	 * Book Catalog REST HTML
